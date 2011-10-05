@@ -1,0 +1,90 @@
+# MultiSync V 1.0 by cytec
+# Let you connect your iPhone to more than one iTunes ;)
+# 
+# Switch your iPhone/iPod to "Manual add Music" 
+# run "local" at the mac you have your iPhone/iPod synced to, then switch to the other Machine and run "2nd Mac"
+# it Patches the iTunes Library Files so you dont get the clear Promt...
+# 
+# If you Connect your iPhone/iPod now you should be able to Access/add your Music from the 2nd Machine, too
+#
+# change pathtolib with the Path to your iTunes Library...
+
+
+
+
+DATACONF="$0/../data.conf"
+WORKDIR="$0/../"
+
+. $DATACONF
+clear
+cd $WORKDIR
+
+echo "making backup in case of something goes terrible wrong..."
+if [ -e $pathtolib/iTunes\ Library.xml ]; then
+cp $pathtolib/iTunes\ Library.xml $pathtolib/iTunes\ Library.xml.back
+cp $pathtolib/iTunes\ Library $pathtolib/iTunes\ Library.back
+
+echo -e "$(cat $pathtolib/iTunes\ Library.xml | grep "Library Persistent ID" | sed 's/<key>.*\<\/key>//g' | sed -e 's/<\/*string>//g' | tr '\t' ' ' | sed 's/ //g')" > string_2ndmac
+awsome="$(cat string_2ndmac)"
+legendary="$(cat string_local)"
+echo "lets start..."
+echo "doing my awsome work... oh of course... its legend...whait for it...ary"
+echo "Changing iTunes Library.xml..."
+echo -e "$(cat $pathtolib/iTunes\ Library.xml | sed 's/'$awsome'/'$legendary'/g')"  > $pathtolib/iTunes\ Library_new.xml
+echo "DONE... replaced $awsome with $legendary"
+echo "cleaning up lil bit..."
+rm -rf $pathtolib/iTunes\ Library.xml
+mv $pathtolib/iTunes\ Library_new.xml $pathtolib/iTunes\ Library.xml
+echo "yeah... lets go on"
+else
+	if [ -e $pathtolib/iTunes\ Music\ Library.xml ]; then
+		cp $pathtolib/iTunes\ Music\ Library.xml $pathtolib/iTunes\ Music\ Library.xml.back
+		cp $pathtolib/iTunes\ Library $pathtolib/iTunes\ Library.back
+
+		echo -e "$(cat $pathtolib/iTunes\ Music\ Library.xml | grep "Library Persistent ID" | sed 's/<key>.*\<\/key>//g' | sed -e 's/<\/*string>//g' | tr '\t' ' ' | sed 's/ //g')" > string_2ndmac
+		awsome="$(cat string_2ndmac)"
+		legendary="$(cat string_local)"
+		echo "lets start..."
+		echo "doing my awsome work... oh of course... its legend...whait for it...ary"
+		echo "Changing iTunes Library.xml..."
+		echo -e "$(cat $pathtolib/iTunes\ Music\ Library.xml | sed 's/'$awsome'/'$legendary'/g')"  > $pathtolib/iTunes\ Library_new.xml
+		echo "DONE... replaced $awsome with $legendary"
+		echo "cleaning up lil bit..."
+		rm -rf $pathtolib/iTunes\ Music\ Library.xml
+		mv $pathtolib/iTunes\ Library_new.xml $pathtolib/iTunes\ Music\ Library.xml
+		echo "yeah... lets go on"
+	fi
+fi	
+	
+cd $WORKDIR
+
+echo -e "$(cat string_local | tr '[:upper:]' '[:lower:]' | sed 's/..../& /g')" > HEX_replacer
+echo -e "$(cat string_2ndmac | tr '[:upper:]' '[:lower:]' | sed 's/..../& /g')" > HEX_orginal
+ted="$(cat HEX_orginal)"
+barney="$(cat HEX_replacer)"
+echo "Changing iTunes Library..."
+#cd $pathtolib
+echo "Decrypting Binary..."
+xxd $pathtolib/iTunes\ Library > $pathtolib/iTunes\ Library\ HEX
+echo "Hell yeah..."
+echo -e "$(cat $pathtolib/iTunes\ Library\ HEX | sed -e "s/$ted/$barney/g")" > $pathtolib/iTunes\ Library\ CHANGED
+echo "Puttn new Stuff in there..."
+xxd -r $pathtolib/iTunes\ Library\ CHANGED > $pathtolib/iTunes\ Library\ NEWONE
+echo "Switching back to Binary mode..."
+echo "DONE... replaced $ted with $barney"
+
+echo "cleaning up again..."
+
+rm -rf $pathtolib/iTunes\ Library\ CHANGED
+rm -rf $pathtolib/iTunes\ Library
+rm -rf $pathtolib/iTunes\ Library\ HEX
+mv $pathtolib/iTunes\ Library\ NEWONE $pathtolib/iTunes\ Library
+rm -rf $HOME/Desktop/iTunesFix/string_2ndmac
+rm -rf $HOME/Desktop/iTunesFix/HEX_replacer
+rm -rf $HOME/Desktop/iTunesFix/HEX_orginal
+echo "AND IT IS ON"
+echo "You can use your iPhone now on this mac, too..."
+echo "True Story ;)"
+exit
+
+

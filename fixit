@@ -1,0 +1,37 @@
+# MultiSync V 1.0 by cytec
+# Let you connect your iPhone to more than one iTunes ;)
+# 
+# Switch your iPhone/iPod to "Manual add Music" 
+# run "local" at the mac you have your iPhone/iPod synced to, then switch to the other Machine and run "2nd Mac"
+# it Patches the iTunes Library Files so you dont get the clear Promt...
+# 
+# If you Connect your iPhone/iPod now you should be able to Access/add your Music from the 2nd Machine, too
+#
+# change pathtolib with the Path to your iTunes Library...
+
+
+
+DATACONF="$0/../data.conf"
+
+. $DATACONF
+clear
+
+if [ -e $pathtolib/iTunes\ Music\ Library.xml.back ]; then
+	echo "F**CK everything is Crashed..."
+	echo "Switching Back to Normal..."
+	mv $pathtolib/iTunes\ Music\ Library.xml.back $pathtolib/iTunes\ Music\ Library.xml
+	mv $pathtolib/iTunes\ Library.back $pathtolib/iTunes\ Library
+	echo "DONE"
+else
+	if [ -e $pathtolib/iTunes\ Library.xml.back ]; then
+		echo "F**CK everything is Crashed..."
+		echo "Switching Back to Normal..."
+mv $pathtolib/iTunes\ Library.xml.back $pathtolib/iTunes\ Library.xml
+mv $pathtolib/iTunes\ Library.back $pathtolib/iTunes\ Library
+echo "DONE"
+else
+echo "Seems like you dont have changed anything"
+fi
+fi
+
+

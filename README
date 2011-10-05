@@ -1,0 +1,42 @@
+# MultiSync V 1.0 by cytec
+# Let you connect your iPhone to more than one iTunes ;)
+# 
+# Switch your iPhone/iPod to "Manual add Music" 
+# run "local" at the mac you have your iPhone/iPod synced to, then switch to the other Machine and run "2nd Mac"
+# it Patches the iTunes Library Files so you dont get the clear Promt...
+# 
+# If you Connect your iPhone/iPod now you should be able to Access/add your Music from the 2nd Machine, too
+#
+
+
+ENGLISH:
+
+xxd is needed
+
+Please enter your Path to iTunes Library in data.conf
+
+Go to your Machine where your iDevice is connectet to and run the "local" Script,
+then copy the whole Folder to your 2nd Machine and run the "2ndMachine" Script.
+
+It Searches for the Library Persident ID and changes it to the one on your First Machine.
+
+If your iDevice is set to "add music manually" you can now add Music from this Machine, too
+if not, you can sync but loose the data that is not on this Machine, so i higly Recommend to use "add music manually" 
+
+if anything goes wrong, just run "fixit"
+
+
+GERMAN:
+
+xxd wird benötigt
+
+Bitte den Pfad zu iTunes Library in data.conf anpassen.
+
+Auf dem Rechner welcher mit dem iDevice Verknüpft ist "local" ausführen, den Ordner auf die 2te Maschiene kopieren und "2ndMachine ausführen"
+
+Das Script such und ersetzte die Library ID des 2ten Rechners mit der des ersten.
+
+Wenn das iDevie auf "Manuelle Verwaltung von Musik" gestellt ist kannst du nun Musik hinzufügen...
+
+Wenn irgendwas schief geht, einfach "fixit" ausführen
+
